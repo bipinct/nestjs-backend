@@ -20,17 +20,11 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 export class PatientsController {
   constructor(private readonly patientsService: PatientsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createPatientDto: CreatePatientDto) {
     return this.patientsService.create(createPatientDto);
-  }
-
-
-  // @Get('profile')
-  // getProfile(@Request() req) {
-  //   return req.user;
-  // }
-  
+  }  
   
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -42,21 +36,25 @@ export class PatientsController {
     return { data, total, page, last_page: Math.ceil(total / limit) };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.patientsService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePatientDto: UpdatePatientDto) {
     return this.patientsService.update(id, updatePatientDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.patientsService.remove(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put()
   put(@Body() updatePatientDto: UpdatePatientDto) {
     return this.patientsService.put(updatePatientDto);
