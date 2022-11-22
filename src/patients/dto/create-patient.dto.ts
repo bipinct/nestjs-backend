@@ -1,10 +1,14 @@
 export class CreatePatientDto {
-  name: string;
+  firstName: string;
+  lastName: string;
   patientId: string;
   age: number;
   gender: string;
   program: string;
   enrollmentDate: string;
+  cardiologyProvider: string;
+  cardiologyInstitution: string;
+  protocol: string;
   proividerRiskAssessment: string;
   action: string;
   comment: string;
@@ -20,5 +24,6 @@ export class CreatePatientDto {
     ecgMetrics: [];
     problemList: [];
     medication: [];
+    diagnosis:[];
   };
 }

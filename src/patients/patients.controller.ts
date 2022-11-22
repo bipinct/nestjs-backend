@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+  Req,
+} from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
+import { Request } from 'express';
 
 @Controller('patients')
 export class PatientsController {
@@ -13,8 +24,12 @@ export class PatientsController {
   }
 
   @Get()
-  findAll() {
-    return this.patientsService.findAll();
+  async findAll(@Req() request: Request) {
+    const page: number = parseInt(request.query.page as any) || 1;
+    const limit = 50;
+    const total = await this.patientsService.count({});
+    const data = await this.patientsService.find({}, page, limit);
+    return { data, total, page, last_page: Math.ceil(total / limit) };
   }
 
   @Get(':id')
@@ -36,6 +51,4 @@ export class PatientsController {
   put(@Body() updatePatientDto: UpdatePatientDto) {
     return this.patientsService.put(updatePatientDto);
   }
-
-
 }

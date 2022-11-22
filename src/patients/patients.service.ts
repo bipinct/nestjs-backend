@@ -14,11 +14,11 @@ export class PatientsService {
 
   create(createPatientDto: CreatePatientDto): Promise<Patient> {
     const model = new this.patientModel();
-    model.name = createPatientDto.name;
+    model.firstName = createPatientDto.firstName;
     model.enrollmentDate = createPatientDto.enrollmentDate;
     model.gender = createPatientDto.gender;
     model.patientId = createPatientDto.patientId;
-    model.name = createPatientDto.name;
+    model.lastName = createPatientDto.lastName;
     model.action = createPatientDto.action;
     model.comment = createPatientDto.comment;
     model.age = createPatientDto.age;
@@ -26,12 +26,23 @@ export class PatientsService {
     model.program = createPatientDto.program;
     model.vitals = createPatientDto.vitals;
     model.lastHospitalization = createPatientDto.lastHospitalization;
-
+    model.cardiologyProvider = createPatientDto.cardiologyProvider;
+    model.cardiologyInstitution = createPatientDto.cardiologyInstitution;
+    model.protocol = createPatientDto.protocol;
     return model.save();
   }
 
   findAll(): Promise<Patient[]> {
     return this.patientModel.find().exec();
+  }
+
+  find(options: any, page: number, limit: number): Promise<Patient[]> {
+    return this.patientModel
+      .find(options)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .select('firstName lastName gender age patientId lastHospitalization ')
+      .exec();
   }
 
   findOne(id: string): Promise<Patient | null> {
@@ -45,7 +56,8 @@ export class PatientsService {
           _id: id,
         },
         {
-          name: updatePatientDto.name,
+          firstName: updatePatientDto.firstName,
+          lastName: updatePatientDto.lastName,
           patientId: updatePatientDto.patientId,
           age: updatePatientDto.age,
           gender: updatePatientDto.gender,
@@ -56,6 +68,9 @@ export class PatientsService {
           comment: updatePatientDto.comment,
           lastHospitalization: updatePatientDto.lastHospitalization,
           vitals: updatePatientDto.vitals,
+          cardiologyProvider: updatePatientDto.cardiologyProvider,
+          cardiologyInstitution: updatePatientDto.cardiologyInstitution,
+          protocol: updatePatientDto.protocol,
         },
       )
       .exec();
@@ -72,7 +87,8 @@ export class PatientsService {
           patientId: updatePatientDto.patientId,
         },
         {
-          name: updatePatientDto.name,
+          firstName: updatePatientDto.firstName,
+          lastName: updatePatientDto.lastName,
           patientId: updatePatientDto.patientId,
           age: updatePatientDto.age,
           gender: updatePatientDto.gender,
@@ -83,11 +99,18 @@ export class PatientsService {
           comment: updatePatientDto.comment,
           lastHospitalization: updatePatientDto.lastHospitalization,
           vitals: updatePatientDto.vitals,
+          cardiologyProvider: updatePatientDto.cardiologyProvider,
+          cardiologyInstitution: updatePatientDto.cardiologyInstitution,
+          protocol: updatePatientDto.protocol,
         },
         {
           upsert: true,
         },
       )
       .exec();
+  }
+
+  count(options: any): Promise<number>{
+    return this.patientModel.count(options).exec();
   }
 }

@@ -15,6 +15,8 @@ class Vitals {
   problemList: [];
   @Prop()
   medication: [];
+  @Prop()
+  diagnosis: [];
 }
 
 @Schema()
@@ -32,7 +34,9 @@ export type PatientDocument = Patient & Document;
 @Schema()
 export class Patient {
   @Prop()
-  name: string;
+  firstName: string;  
+  @Prop()
+  lastName: string;  
   @Prop({
     required: [true, 'Missing Patient Id'],
     unique: [true, 'Duplicate record. Patient Id must be unique'],
@@ -42,6 +46,16 @@ export class Patient {
   age: number;
   @Prop()
   gender: string;
+
+  @Prop()  
+  cardiologyProvider:string;
+  @Prop()
+  
+  cardiologyInstitution:string;
+
+  @Prop()  
+  protocol:string;
+
   @Prop()
   program: string;
   @Prop()
