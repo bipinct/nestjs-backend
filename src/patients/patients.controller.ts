@@ -8,11 +8,13 @@ import {
   Delete,
   Put,
   Req,
+  UseGuards
 } from '@nestjs/common';
+import { Request } from 'express';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
-import { Request } from 'express';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('patients')
 export class PatientsController {
@@ -23,6 +25,14 @@ export class PatientsController {
     return this.patientsService.create(createPatientDto);
   }
 
+
+  // @Get('profile')
+  // getProfile(@Request() req) {
+  //   return req.user;
+  // }
+  
+  
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Req() request: Request) {
     const page: number = parseInt(request.query.page as any) || 1;
