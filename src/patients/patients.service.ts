@@ -64,4 +64,30 @@ export class PatientsService {
   remove(id: string) {
     return this.patientModel.deleteOne({ _id: id }).exec();
   }
+
+  put(updatePatientDto: UpdatePatientDto) {
+    return this.patientModel
+      .findOneAndUpdate(
+        {
+          patientId: updatePatientDto.patientId,
+        },
+        {
+          name: updatePatientDto.name,
+          patientId: updatePatientDto.patientId,
+          age: updatePatientDto.age,
+          gender: updatePatientDto.gender,
+          program: updatePatientDto.program,
+          enrollmentDate: updatePatientDto.enrollmentDate,
+          proividerRiskAssessment: updatePatientDto.proividerRiskAssessment,
+          action: updatePatientDto.action,
+          comment: updatePatientDto.comment,
+          lastHospitalization: updatePatientDto.lastHospitalization,
+          vitals: updatePatientDto.vitals,
+        },
+        {
+          upsert: true,
+        },
+      )
+      .exec();
+  }
 }
