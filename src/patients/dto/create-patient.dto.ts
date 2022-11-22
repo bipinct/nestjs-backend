@@ -24,6 +24,8 @@ export class CreatePatientDto {
     ecgMetrics: [];
     problemList: [];
     medication: [];
-    diagnosis:[];
+    diagnosis: [];
+    patientMonitoring: {};
+    riskComponent: {};
   };
 }

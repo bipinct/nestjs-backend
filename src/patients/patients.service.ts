@@ -28,7 +28,7 @@ export class PatientsService {
     model.lastHospitalization = createPatientDto.lastHospitalization;
     model.cardiologyProvider = createPatientDto.cardiologyProvider;
     model.cardiologyInstitution = createPatientDto.cardiologyInstitution;
-    model.protocol = createPatientDto.protocol;
+    model.protocol = createPatientDto.protocol;    
     return model.save();
   }
 
@@ -41,7 +41,7 @@ export class PatientsService {
       .find(options)
       .skip((page - 1) * limit)
       .limit(limit)
-      .select('firstName lastName gender age patientId lastHospitalization ')
+      .select('firstName lastName gender age patientId lastHospitalization vitals.patientMonitoring vitals.riskComponent')
       .exec();
   }
 
