@@ -1,5 +1,5 @@
 import { Controller, Post, Body,Get } from '@nestjs/common';
-import { CretaeUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UserDetail } from 'src/users/dto/user-detail.dto';
 import { AuthService } from './auth.service';
 
@@ -14,7 +14,7 @@ export class AuthController {
 
   @Post('register')
   register(
-    @Body() createUserDto: CretaeUserDto,
+    @Body() createUserDto: CreateUserDto,
   ): Promise<UserDetail | null | string> {
     return this.authService.register(createUserDto);
   }
