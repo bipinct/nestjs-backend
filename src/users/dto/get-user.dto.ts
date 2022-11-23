@@ -1,5 +1,10 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export class GetUserDto {
+  @ApiProperty()
   name: string;
+  @ApiProperty()
   email: string;
-  isVerified:boolean;
+  @ApiProperty()
+  isVerified: boolean;
 }
