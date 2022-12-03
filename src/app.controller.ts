@@ -1,10 +1,12 @@
-import { Controller, Get, Post, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Req,UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { AuthService } from './auth/auth.service';
+import { LoggingInterceptor } from './logging.interceptors';
 
 @Controller()
+@UseInterceptors(LoggingInterceptor)
 export class AppController {
   constructor(
     private readonly appService: AppService,
